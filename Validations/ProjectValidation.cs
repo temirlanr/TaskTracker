@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Entities;
+using TaskTracker.Exceptions;
 
 namespace TaskTracker.Validations
 {
@@ -15,7 +16,7 @@ namespace TaskTracker.Validations
         {
             if (!ProjectStatus.Contains(projectStatus))
             {
-                throw new Exception("Invalid project status.");
+                throw new InvalidStatusException("Invalid project status.");
             }
         }
 
@@ -23,7 +24,7 @@ namespace TaskTracker.Validations
         {
             if (!TaskStatus.Contains(taskStatus))
             {
-                throw new Exception("Invalid task status.");
+                throw new InvalidStatusException("Invalid task status.");
             }
         }
     }

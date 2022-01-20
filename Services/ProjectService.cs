@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Entities;
+using TaskTracker.Exceptions;
 using TaskTracker.Extensions;
 using TaskTracker.Repositories;
 using TaskTracker.Validations;
@@ -31,7 +32,7 @@ namespace TaskTracker.Services
 
             if(existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             _validation.ValidateTaskStatus(task.Status);
@@ -46,7 +47,7 @@ namespace TaskTracker.Services
 
             if (project == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             _repo.DeleteProject(project);
@@ -58,13 +59,13 @@ namespace TaskTracker.Services
             var existingProject = _repo.GetProjectById(projectId);
             if (existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             var existingTask = existingProject.Tasks.FirstOrDefault(t => t.Id == taskId);
             if (existingTask == null)
             {
-                throw new Exception("Task not found.");
+                throw new TaskNotFoundException("Task not found.");
             }
 
             existingProject.Tasks.Remove(existingTask);
@@ -77,7 +78,7 @@ namespace TaskTracker.Services
             var existingProject = _repo.GetProjectById(projectId);
             if (existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             return existingProject;
@@ -93,13 +94,13 @@ namespace TaskTracker.Services
             var existingProject = _repo.GetProjectById(projectId);
             if (existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             var existingTask = existingProject.Tasks.FirstOrDefault(t => t.Id == taskId);
             if (existingTask == null)
             {
-                throw new Exception("Task not found.");
+                throw new TaskNotFoundException("Task not found.");
             }
 
             return existingTask;
@@ -110,7 +111,7 @@ namespace TaskTracker.Services
             var existingProject = _repo.GetProjectById(projectId);
             if (existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             return existingProject.Tasks;
@@ -128,7 +129,7 @@ namespace TaskTracker.Services
             var existingProject = _repo.GetProjectById(projectId);
             if (existingProject == null)
             {
-                throw new Exception("Project not found.");
+                throw new ProjectNotFoundException("Project not found.");
             }
 
             foreach(var op in taskUpdateOps)
@@ -136,7 +137,7 @@ namespace TaskTracker.Services
                 var taskToUpdate = existingProject.Tasks.FirstOrDefault(t => t.Id == op.TaskId);
                 if (taskToUpdate == null)
                 {
-                    throw new Exception("Task not found.");
+                    throw new TaskNotFoundException("Task not found.");
                 }
 
                 switch (op.Property)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Dtos;
 using TaskTracker.Entities;
+using TaskTracker.Exceptions;
 using TaskTracker.Extensions;
 using TaskTracker.Services;
 
@@ -25,7 +27,15 @@ namespace TaskTracker.Controllers
         }
 
         // GET: api/projects
+        /// <summary>
+        /// Returns information about all Projects
+        /// </summary>
+        /// <returns>A list of Projects</returns>
+        /// <response code="200">Request processed</response>
+        /// <response code="400">Error occured while processing, check the Exception info please</response> 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<IEnumerable<ProjectReadDto>> GetProjects()
         {
             try
@@ -35,12 +45,21 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
         // GET: api/projects/{projectId}
+        /// <summary>
+        /// Returns information about Project given its ID
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>Project info</returns>
+        /// <response code="200">Request processed</response>
+        /// <response code="400">Error occured while processing, check the Exception info please</response>
         [HttpGet("{projectId}", Name = "GetProject")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ProjectReadDto> GetProject(int projectId)
         {
             try
@@ -50,12 +69,21 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
         // POST: api/projects
+        /// <summary>
+        /// Creates a Project
+        /// </summary>
+        /// <param name="projectCreateDto"></param>
+        /// <returns>A newly created Project</returns>
+        /// <response code="201">Returns the newly created Projects</response>
+        /// <response code="400">Error occured while processing, check the Exception info please</response> 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ProjectCreateDto> CreateProject(ProjectCreateDto projectCreateDto)
         {
             try
@@ -67,7 +95,7 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -84,7 +112,7 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -99,7 +127,7 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -125,7 +153,7 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -141,7 +169,7 @@ namespace TaskTracker.Controllers
             }
             catch(Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -157,7 +185,7 @@ namespace TaskTracker.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -175,7 +203,7 @@ namespace TaskTracker.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -191,7 +219,7 @@ namespace TaskTracker.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
 
@@ -206,7 +234,7 @@ namespace TaskTracker.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e);
             }
         }
     }

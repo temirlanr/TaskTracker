@@ -14,7 +14,7 @@ namespace TaskTracker.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProjectTask>().HasKey(t => t.Id);
-            modelBuilder.Entity<ProjectTask>().Property(t => t.Id).ValueGeneratedOnAdd().;
+            modelBuilder.Entity<ProjectTask>().Property(t => t.Id).ValueGeneratedOnAdd();
             modelBuilder.UseIdentityColumns();
         }
     }
