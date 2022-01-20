@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Entities;
+using TaskTracker.Extensions;
 using TaskTracker.Repositories;
 using TaskTracker.Validations;
 
@@ -19,7 +20,7 @@ namespace TaskTracker.Services
         }
         public void CreateProject(Project project)
         {
-            _validation.ValidateProjectStatus(project);
+            _validation.ValidateProjectStatus(project.Status);
             _repo.CreateProject(project);
             _repo.SaveChanges();
         }
@@ -33,7 +34,7 @@ namespace TaskTracker.Services
                 throw new Exception("Project not found.");
             }
 
-            _validation.ValidateTaskStatus(task);
+            _validation.ValidateTaskStatus(task.Status);
             existingProject.Tasks.Add(task);
             _repo.UpdateProject(existingProject);
             _repo.SaveChanges();
@@ -117,14 +118,48 @@ namespace TaskTracker.Services
 
         public void UpdateProject(Project project)
         {
-            _validation.ValidateProjectStatus(project);
+            _validation.ValidateProjectStatus(project.Status);
             _repo.UpdateProject(project);
             _repo.SaveChanges();
         }
 
-        public void UpdateTask(int projectId, ProjectTask task)
+        public void UpdateTask(int projectId, List<TaskUpdateOperation> taskUpdateOps)
         {
-            throw new NotImplementedException();
+            var existingProject = _repo.GetProjectById(projectId);
+            if (existingProject == null)
+            {
+                throw new Exception("Project not found.");
+            }
+
+            foreach(var op in taskUpdateOps)
+            {
+                var taskToUpdate = existingProject.Tasks.FirstOrDefault(t => t.Id == op.TaskId);
+                if (taskToUpdate == null)
+                {
+                    throw new Exception("Task not found.");
+                }
+
+                switch (op.Property)
+                {
+                    case "Name":
+                        taskToUpdate.Name = op.Value;
+                        break;
+                    case "Status":
+                        _validation.ValidateTaskStatus(op.Value);
+                        taskToUpdate.Status = op.Value;
+                        break;
+                    case "Description":
+                        taskToUpdate.Description = op.Value;
+                        break;
+                    case "Priority":
+                        taskToUpdate.Priority = Convert.ToInt32(op.Value);
+                        break;
+                    default:
+                        throw new Exception($"Invalid Property name: {op.Property}.");
+                }
+                _repo.UpdateProject(existingProject);
+            }
+            _repo.SaveChanges();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Entities;
+using TaskTracker.Extensions;
 
 namespace TaskTracker.Services
 {
@@ -16,7 +17,7 @@ namespace TaskTracker.Services
         IEnumerable<ProjectTask> GetTasks(int projectId);
         ProjectTask GetTaskById(int projectId, int taskId);
         void CreateTask(int projectId, ProjectTask task);
-        void UpdateTask(int projectId, ProjectTask task);
+        void UpdateTask(int projectId, List<TaskUpdateOperation> taskUpdateOps);
         void DeleteTask(int projectId, int taskId);
 
     }

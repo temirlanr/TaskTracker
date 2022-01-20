@@ -11,17 +11,17 @@ namespace TaskTracker.Validations
         private readonly List<string> ProjectStatus = new() { "NotStarted", "Active", "Completed" };
         private readonly List<string> TaskStatus = new() { "ToDo", "InProgress", "Done" };
 
-        public void ValidateProjectStatus(Project project)
+        public void ValidateProjectStatus(string projectStatus)
         {
-            if (!ProjectStatus.Contains(project.Status))
+            if (!ProjectStatus.Contains(projectStatus))
             {
                 throw new Exception("Invalid project status.");
             }
         }
 
-        public void ValidateTaskStatus(ProjectTask task)
+        public void ValidateTaskStatus(string taskStatus)
         {
-            if (!TaskStatus.Contains(task.Status))
+            if (!TaskStatus.Contains(taskStatus))
             {
                 throw new Exception("Invalid task status.");
             }

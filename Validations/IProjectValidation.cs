@@ -8,7 +8,7 @@ namespace TaskTracker.Validations
 {
     public interface IProjectValidation
     {
-        void ValidateProjectStatus(Project project);
-        void ValidateTaskStatus(ProjectTask task);
+        void ValidateProjectStatus(string projectStatus);
+        void ValidateTaskStatus(string taskStatus);
     }
 }
