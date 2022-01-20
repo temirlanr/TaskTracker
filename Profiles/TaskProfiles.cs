@@ -12,8 +12,6 @@ namespace TaskTracker.Profiles
     {
         public TaskProfiles()
         {
-            CreateMap<TaskUpdateDto, ProjectTask>();
-            CreateMap<ProjectTask, TaskUpdateDto>();
             CreateMap<TaskCreateDto, ProjectTask>();
             CreateMap<ProjectTask, TaskReadDto>();
         }

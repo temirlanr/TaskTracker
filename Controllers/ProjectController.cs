@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskTracker.Dtos;
 using TaskTracker.Entities;
+using TaskTracker.Extensions;
 using TaskTracker.Services;
 
 namespace TaskTracker.Controllers
@@ -39,7 +40,7 @@ namespace TaskTracker.Controllers
         }
 
         // GET: api/projects/{projectId}
-        [HttpGet("{projectId}")]
+        [HttpGet("{projectId}", Name = "GetProject")]
         public ActionResult<ProjectReadDto> GetProject(int projectId)
         {
             try
@@ -62,7 +63,7 @@ namespace TaskTracker.Controllers
                 var project = _mapper.Map<Project>(projectCreateDto);
                 _service.CreateProject(project);
                 var projectReadDto = _mapper.Map<ProjectReadDto>(project);
-                return CreatedAtAction(nameof(GetProject), new { id = projectReadDto.Id }, projectReadDto);
+                return CreatedAtAction(nameof(GetProject), new { projectId = projectReadDto.Id }, projectReadDto);
             }
             catch(Exception e)
             {
@@ -128,6 +129,85 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // 
+        // GET: api/projects/{projectId}/task={taskId}
+        [HttpGet]
+        [Route("{projectId}/task={taskId}")]
+        public ActionResult<TaskReadDto> GetTask(int projectId, int taskId)
+        {
+            try
+            {
+                var task = _service.GetTaskById(projectId, taskId);
+                return Ok(_mapper.Map<TaskReadDto>(task));
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // GET: api/projects/{projectId}
+        [HttpGet]
+        [Route("{projectId}")]
+        public ActionResult<IEnumerable<TaskReadDto>> GetTasks(int projectId)
+        {
+            try
+            {
+                var tasks = _service.GetTasks(projectId);
+                return Ok(_mapper.Map<IEnumerable<TaskReadDto>>(tasks));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // POST: api/projects/{projectId}
+        [HttpPost]
+        [Route("{projectId}")]
+        public ActionResult<TaskCreateDto> CreateTask(int projectId, TaskCreateDto taskCreateDto)
+        {
+            try
+            {
+                var task = _mapper.Map<ProjectTask>(taskCreateDto);
+                _service.CreateTask(projectId, task);
+                var taskReadDto = _mapper.Map<TaskReadDto>(task);
+                return CreatedAtAction(nameof(GetTask), new { projectId, taskId = taskReadDto.Id }, taskReadDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // DELETE: api/projects/{projectId}/task={taskId}
+        [HttpDelete]
+        [Route("{projectId}/task={taskId}")]
+        public ActionResult DeleteTask(int projectId, int taskId)
+        {
+            try
+            {
+                _service.DeleteTask(projectId, taskId);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // PUT: api/projects/{projectId}
+        [HttpPut("{projectId}")]
+        public ActionResult UpdateTask(int projectId, List<TaskUpdateOperation> taskUpdateOps)
+        {
+            try
+            {
+                _service.UpdateTask(projectId, taskUpdateOps);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

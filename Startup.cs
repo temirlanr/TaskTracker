@@ -33,7 +33,10 @@ namespace TaskTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMvc(options =>
+            {
+                options.SuppressAsyncSuffixInActionNames = false;
+            });
             services.AddDbContext<TaskTrackerContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -59,10 +62,7 @@ namespace TaskTracker
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwagger(c =>
-                {
-                    c.SerializeAsV2 = true;
-                });
+                app.UseSwagger();
 
                 app.UseSwaggerUI(c =>
                 {
