@@ -13,5 +13,6 @@ namespace TaskTracker.Dtos
         public int Priority { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset CompleteDate { get; set; }
+        public List<TaskCreateDto> Tasks { get; set; }
     }
 }
