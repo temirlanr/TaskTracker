@@ -129,9 +129,9 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // GET: api/projects/{projectId}/task={taskId}
+        // GET: api/projects/{projectId}/tasks/{taskId}
         [HttpGet]
-        [Route("{projectId}/task={taskId}")]
+        [Route("{projectId}/tasks/{taskId}")]
         public ActionResult<TaskReadDto> GetTask(int projectId, int taskId)
         {
             try
@@ -145,9 +145,9 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // GET: api/projects/{projectId}
+        // GET: api/projects/{projectId}/tasks
         [HttpGet]
-        [Route("{projectId}")]
+        [Route("{projectId}/tasks")]
         public ActionResult<IEnumerable<TaskReadDto>> GetTasks(int projectId)
         {
             try
@@ -161,9 +161,9 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // POST: api/projects/{projectId}
+        // POST: api/projects/{projectId}/tasks
         [HttpPost]
-        [Route("{projectId}")]
+        [Route("{projectId}/tasks")]
         public ActionResult<TaskCreateDto> CreateTask(int projectId, TaskCreateDto taskCreateDto)
         {
             try
@@ -179,9 +179,9 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // DELETE: api/projects/{projectId}/task={taskId}
+        // DELETE: api/projects/{projectId}/tasks/{taskId}
         [HttpDelete]
-        [Route("{projectId}/task={taskId}")]
+        [Route("{projectId}/tasks/{taskId}")]
         public ActionResult DeleteTask(int projectId, int taskId)
         {
             try
@@ -195,8 +195,8 @@ namespace TaskTracker.Controllers
             }
         }
 
-        // PUT: api/projects/{projectId}
-        [HttpPut("{projectId}")]
+        // PUT: api/projects/{projectId}/tasks
+        [HttpPatch("{projectId}/tasks")]
         public ActionResult UpdateTask(int projectId, List<TaskUpdateOperation> taskUpdateOps)
         {
             try
