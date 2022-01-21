@@ -6,8 +6,11 @@ Manage your projects and tasks easily with this app.
 
 ## Installation
 
-There are no real instructions for installation, you just clone the repo or download it and launch it on your localhost. The only thing is you will need to configure the database. I used PostgreSQL database, so the code doesn't support any other database services. To link the Task Tracker to your PostgreSQL database go to "appsettings.json" file, find "DefaultConnection" and set it for your server and database. After that open the Powershell or any other command prompt you are using with this app (you will need to get to the location of this app) and execute
-$ dotnet ef database update <br><br>
+There are no real instructions for installation, you just clone the repo or download it and launch it on your localhost. The only thing is you will need to configure the database. I used PostgreSQL database, so the code doesn't support any other database services. To link the Task Tracker to your PostgreSQL database go to "appsettings.json" file, find "DefaultConnection" and set it for your server and database. After that open the Powershell or any other command-line shell you are using with this app (you will need to get to the location of this app) and execute
+```console
+$ dotnet ef database update
+```
+<br><br>
 It has a Swagger page with all the documentation needed, so I recommend using it.
 
 ## Packages used and their versions 
