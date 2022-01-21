@@ -4,7 +4,7 @@
 
 ## Installation
 
-There are no real instructions for installation, you just clone the repo or download it and launch it on your localhost. The only is that you will need to configure the database.
+There are no real instructions for installation, you just clone the repo or download it and launch it on your localhost. The only thing is you will need to configure the database.
 I used PostgreSQL database, so the code doesn't support any other database services. To link the Task Tracker to your PostgreSQL database go to "appsettings.json" file, find "DefaultConnection" and set it for your server and database.
 
 ## Packages used and their versions 
