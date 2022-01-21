@@ -10,7 +10,6 @@ There are no real instructions for installation, you just clone the repo or down
 ```console
 $ dotnet ef database update
 ```
-<br><br>
 It has a Swagger page with all the documentation needed, so I recommend using it.
 
 ## Packages used and their versions 
