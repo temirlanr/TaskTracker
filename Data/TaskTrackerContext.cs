@@ -13,6 +13,7 @@ namespace TaskTracker.Data
         public DbSet<Project> Projects { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Tried to make IDs in Tasks auto-incremented, but it seems like it doesn't work :(
             modelBuilder.Entity<ProjectTask>().HasKey(t => t.Id);
             modelBuilder.Entity<ProjectTask>().Property(t => t.Id).ValueGeneratedOnAdd();
             modelBuilder.UseIdentityColumns();

@@ -33,12 +33,11 @@ namespace TaskTracker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                options.SuppressAsyncSuffixInActionNames = false;
-            });
+            // DbContext
             services.AddDbContext<TaskTrackerContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            // Controller
             services.AddControllers();
+            // Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TaskTracker", Version = "v1" });
@@ -48,8 +47,11 @@ namespace TaskTracker
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            // Automapper is used for wrapping everythin into Dtos
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            // Needed for JSON Patch
             services.AddControllersWithViews().AddNewtonsoftJson();
+            // For Dependency Injection
             services.AddScoped<IProjectRepo, ProjectRepo>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProjectValidation, ProjectValidation>();
@@ -72,10 +74,9 @@ namespace TaskTracker
 
             // Uncomment when needed
             // app.UseHttpsRedirection();
+            // app.UseAuthorization();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

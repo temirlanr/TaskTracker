@@ -10,5 +10,6 @@ namespace TaskTracker.Validations
     {
         void ValidateProjectStatus(string projectStatus);
         void ValidateTaskStatus(string taskStatus);
+        void ValidateTaskId(List<ProjectTask> tasks);
     }
 }

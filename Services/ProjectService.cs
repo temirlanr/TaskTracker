@@ -22,6 +22,7 @@ namespace TaskTracker.Services
         public void CreateProject(Project project)
         {
             _validation.ValidateProjectStatus(project.Status);
+            _validation.ValidateTaskId(project.Tasks);
             _repo.CreateProject(project);
             _repo.SaveChanges();
         }
@@ -37,6 +38,7 @@ namespace TaskTracker.Services
 
             _validation.ValidateTaskStatus(task.Status);
             existingProject.Tasks.Add(task);
+            _validation.ValidateTaskId(existingProject.Tasks);
             _repo.UpdateProject(existingProject);
             _repo.SaveChanges();
         }
@@ -158,8 +160,8 @@ namespace TaskTracker.Services
                     default:
                         throw new Exception($"Invalid Property name: {op.Property}.");
                 }
-                _repo.UpdateProject(existingProject);
             }
+            _repo.UpdateProject(existingProject);
             _repo.SaveChanges();
         }
     }
