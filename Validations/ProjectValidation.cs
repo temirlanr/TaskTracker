@@ -9,20 +9,20 @@ namespace TaskTracker.Validations
 {
     public class ProjectValidation : IProjectValidation
     {
-        private readonly List<string> ProjectStatus = new() { "NotStarted", "Active", "Completed" };
-        private readonly List<string> TaskStatus = new() { "ToDo", "InProgress", "Done" };
+        private readonly List<string> projectStatus = new() { "NotStarted", "Active", "Completed" };
+        private readonly List<string> taskStatus = new() { "ToDo", "InProgress", "Done" };
 
-        public void ValidateProjectStatus(string projectStatus)
+        public void ValidateProjectStatus(string status)
         {
-            if (!ProjectStatus.Contains(projectStatus))
+            if (!projectStatus.Contains(status))
             {
                 throw new InvalidStatusException("Invalid project status.");
             }
         }
 
-        public void ValidateTaskStatus(string taskStatus)
+        public void ValidateTaskStatus(string status)
         {
-            if (!TaskStatus.Contains(taskStatus))
+            if (!taskStatus.Contains(status))
             {
                 throw new InvalidStatusException("Invalid task status.");
             }

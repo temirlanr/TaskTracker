@@ -14,11 +14,13 @@ namespace TaskTracker.Services
     {
         private readonly IProjectRepo _repo;
         private readonly IProjectValidation _validation;
+
         public ProjectService(IProjectRepo repo, IProjectValidation validation)
         {
             _repo = repo;
             _validation = validation;
         }
+
         public void CreateProject(Project project)
         {
             _validation.ValidateProjectStatus(project.Status);
